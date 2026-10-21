@@ -14,7 +14,7 @@
   <Category>Network:Web Tools:</Category>
   <WebUI>http://[IP]:[PORT:8080]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/templates/thuisweb.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/assets/icon.png</Icon>
+  <Icon>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/assets/icon.png?v=2</Icon>
   <Config Name="Webpoort" Target="8080" Default="8583" Mode="tcp" Description="Kies voor iedere website een vrije hostpoort." Type="Port" Display="always" Required="true" Mask="false">8583</Config>
   <Config Name="Websitebestanden" Target="/var/www/html" Default="/mnt/user/appdata/thuisweb/www" Mode="rw" Description="Gebruik voor iedere website een aparte map. Alleen een volledig lege map krijgt een landingpagina." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/thuisweb/www</Config>
   <Config Name="Configuratie" Target="/config" Default="/mnt/user/appdata/thuisweb/config" Mode="rw" Description="Aparte configuratiemap per website; optioneel php.ini en initialisatiestatus." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/thuisweb/config</Config>

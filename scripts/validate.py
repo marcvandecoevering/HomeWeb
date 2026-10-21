@@ -25,6 +25,6 @@ workflow = (root / '.github/workflows/release.yml').read_text()
 for action in re.findall(r'uses:\s*([^\s]+)', workflow):
     assert re.fullmatch(r'[^@]+@[a-f0-9]{40}', action), action
 assert 'pull_request_target' not in workflow
-for path in list((root / 'runtime').glob('*')) + [root / 'Dockerfile']:
+for path in [p for p in (root / 'runtime').rglob('*') if p.is_file()] + [root / 'Dockerfile']:
     assert b'\r' not in path.read_bytes(), f'CRLF in {path}'
 print('PASS: Python syntax, XML structure, workflow action pins, security policy, LF line endings')

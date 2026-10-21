@@ -12,6 +12,18 @@ https://github.com/marcvandecoevering/ThuisWeb.
 Image: `ghcr.io/marcvandecoevering/thuisweb:php8.3`. Anoniem downloaden is gecontroleerd.
 [Eerste geslaagde release](https://github.com/marcvandecoevering/ThuisWeb/actions/runs/39663665343).
 
+De startpagina toont live Apache-, PHP- en OPcache-versies en de ThuisWeb-bronbuild.
+Groene bolletjes betekenen dat de component reageert of ingeschakeld is; amber
+betekent uitgeschakeld, rood dat de status niet kon worden opgehaald. Elke 30 seconden
+wordt opnieuw gecontroleerd. Dit is geen controle op internettoegang of je database.
+Versies zijn alleen beschikbaar zolang de originele startpagina intact is en er
+geen `index.php` staat. Je eigen website krijgt geen openbaar diagnosepaneel.
+
+Een containerupdate overschrijft ook een oude startpagina niet. Wil je de nieuwe
+vormgeving op een bestaande installatie, bewaar je huidige bestanden en kopieer
+bewust `/opt/thuisweb/index.html` naar de webroot. Sla de SHA256 van dat bestand op
+in `/config/.thuisweb-landing.sha256` om de statusweergave voor die pagina in te schakelen.
+
 ## Installatie op Unraid (na publicatie)
 
 Zoek ThuisWeb in Apps zodra de app is toegelaten, kies Install en controleer:

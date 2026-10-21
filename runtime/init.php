@@ -34,6 +34,11 @@ try {
         chown('/var/www/html/index.html', $uid); chgrp('/var/www/html/index.html', $gid);
         chmod('/var/www/html/index.html', 0644);
         chown('/var/www/html', $uid); chgrp('/var/www/html', $gid); chmod('/var/www/html', 0755);
+        $fingerprint = fopen('/config/.thuisweb-landing.sha256', 'x');
+        $hash = hash('sha256', $html)."\n";
+        if (fwrite($fingerprint, $hash) !== strlen($hash) || !fflush($fingerprint)) fail('landingstatus kon niet worden vastgelegd');
+        fclose($fingerprint);
+        chmod('/config/.thuisweb-landing.sha256', 0644);
         $f = fopen($marker, 'x'); fwrite($f, "initialized\n"); fclose($f);
         echo "ThuisWeb: nieuwe landingpagina geplaatst\n";
     }

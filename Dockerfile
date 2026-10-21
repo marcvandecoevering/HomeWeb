@@ -30,6 +30,9 @@ RUN printf 'Listen 8080\nListen 127.0.0.1:8081\n' > /etc/apache2/ports.conf \
     && chmod 755 /opt/thuisweb/entrypoint.sh \
     && mkdir -p /config /opt/thuisweb/health \
     && printf 'ready\n' > /opt/thuisweb/health/index.html \
+    && apache2 -v | sed -n 's@^Server version: Apache/\([^ ]*\).*@\1@p' > /opt/thuisweb/apache-version \
+    && test -s /opt/thuisweb/apache-version \
+    && printf '%s\n' "$SOURCE_REVISION" > /opt/thuisweb/build-revision \
     && php /opt/thuisweb/check.php
 ENV PUID=99 PGID=100 PHP_MEMORY_LIMIT=256M PHP_UPLOAD_LIMIT=32M TZ=Europe/Amsterdam
 EXPOSE 8080

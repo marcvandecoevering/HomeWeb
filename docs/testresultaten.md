@@ -1,5 +1,19 @@
 # Testresultaten
 
+## Vernieuwd beeldmerk en live startpaginastatus - 21 oktober 2026
+
+Een nieuw groen W-beeldmerk wordt gebruikt voor de Unraid-app, startpagina en favicon.
+De startpagina haalt elke 30 seconden de Apache/PHP/OPcache-versies, werkelijke
+OPcache-status en bronbuild op. De lokale container meldt Apache 2.4.68 en PHP/OPcache
+8.3.36. Alle 14 integratietestgroepen zijn geslaagd, inclusief versiecontrole en
+het blokkeren van het statusadres na vervanging van de startpagina of plaatsing
+van een eigen index.php. Het statusantwoord bevat uitsluitend de vijf bedoelde velden.
+
+Desktop- en smalle weergave zijn visueel gecontroleerd. Ook uitgeschakelde OPcache
+(amber, Uitgeschakeld) en een ontbrekend statusantwoord (rood, Niet bereikbaar)
+zijn in de browser beproefd. Versies worden bij een fout gewist in plaats van als
+actuele gegevens te blijven staan. Bestaande websitebestanden worden niet bijgewerkt.
+
 ## Lokale acceptatie - 21 oktober 2026
 
 De image is op Docker Desktop met Linux/amd64 gebouwd. Alle 13 groepen van de

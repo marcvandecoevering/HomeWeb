@@ -77,9 +77,22 @@ try:
     assert 'Je webserver staat klaar' in request(app)
     assert exec_(app, 'stat', '-c', '%u:%g', '/var/www/html') == '99:100'
     passed('empty directory landing and ownership')
+    status = json.loads(request(app, '/__thuisweb/status'))
+    assert status['php'] == exec_(app, 'php', '-r', 'echo PHP_VERSION;')
+    assert status['apache'] == exec_(app, 'cat', '/opt/thuisweb/apache-version')
+    assert status['apache'].startswith('2.4.') and status['opcacheEnabled'] is True
+    assert set(status) == {'php', 'apache', 'opcache', 'opcacheEnabled', 'build'}
+    assert 'Cache-Control: no-store' in request(app, '/__thuisweb/status', '-D', '-')
+    write(app, '/var/www/html/index.html', '<h1>Eigen website</h1>')
+    assert request(app, '/__thuisweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
+    # cat/strip removes the trailing newline, so restore from the shipped template.
+    exec_(app, 'cp', '/opt/thuisweb/index.html', '/var/www/html/index.html')
+    assert json.loads(request(app, '/__thuisweb/status'))['php'] == status['php']
+    passed('live landing versions; replaced page disables version endpoint')
     write(app, '/var/www/html/hello.html', 'hello-static')
     write(app, '/var/www/html/index.php', '<?php echo "php-first";')
     assert request(app) == 'php-first'
+    assert request(app, '/__thuisweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
     assert request(app, '/hello.html') == 'hello-static'
     write(app, '/var/www/html/.htaccess', 'RewriteEngine On\nRewriteRule ^rewritten$ hello.html [L]\n')
     assert request(app, '/rewritten') == 'hello-static'
