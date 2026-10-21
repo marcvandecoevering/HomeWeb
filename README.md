@@ -3,11 +3,14 @@
 Een eigen Apache/PHP-webserver voor Unraid: één website per container, met een
 Nederlandstalige landingpagina voor nieuwe, volledig lege websitemappen.
 
-**Status: lokaal gebouwd, 13 integratietestgroepen geslaagd en gescand op
-21 oktober 2026. Unraid-acceptatie en opname in Community Applications volgen nog.**
+**Status: lokaal en in GitHub Actions gebouwd, getest en gescand op 21 oktober 2026.
+De image is openbaar beschikbaar; de Unraid-basistests zijn geslaagd.
+Update/rollback en opname in Community Applications volgen nog.**
 Zie [testresultaten](docs/testresultaten.md). Openbare broncode:
-https://github.com/marcvandecoevering/ThuisWeb. De workflow publiceert alleen
-na geslaagde eigen tests en scan; bronpublicatie is geen bewijs van een image-release.
+https://github.com/marcvandecoevering/ThuisWeb.
+
+Image: `ghcr.io/marcvandecoevering/thuisweb:php8.3`. Anoniem downloaden is gecontroleerd.
+[Eerste geslaagde release](https://github.com/marcvandecoevering/ThuisWeb/actions/runs/39663665343).
 
 ## Installatie op Unraid (na publicatie)
 

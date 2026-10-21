@@ -44,10 +44,33 @@ PHP 8.3.36 en de verplichte extensies zijn onafhankelijk van de scanner gecontro
 Scanrapport en CycloneDX-SBOM staan lokaal in artifacts; CI bewaart zijn eigen
 resultaten als workflowartifacts.
 
+## Eerste openbare release en Unraid-basistests
+
+[GitHub Actions-run 39663665343](https://github.com/marcvandecoevering/ThuisWeb/actions/runs/39663665343)
+heeft alle 13 integratietestgroepen en de scangrens doorlopen en exact de geteste
+image gepubliceerd. Het openbare GHCR-package is zonder Docker-login opgehaald.
+
+- Broncommit: `6bedcfc71a0021895d636afe39ae707074f9e631`.
+- Unieke tag: `build-39663665343-1-6bedcfc71a00`.
+- Registry-digest: `sha256:df99023e89a90a1ef918b5468a554328c64a897c4c8d45d59995dead6f7e6659`.
+- Config-digest: `sha256:09a098325529cc170884ea86bfcb568ade48d41c2412ca4f3963b28c9980a7d9`.
+- PHP: 8.3.36; basisdigest gelijk aan de lokale acceptatie.
+
+De Unraid 7.3.3-proefinstallatie via de XML-template is geslaagd met eigen
+appdata-mappen en poorten 18583/18584. De WebUI-link toont de landingpagina;
+de eerste container is healthy. Een eigen PHP-website meldt PHP 8.3.36,
+worker 99:100 en succesvol schrijven naar de uploadmap. Herstart behoudt
+alle bestandschecksums en eigenaarschap, inclusief een verborgen bestand.
+Een tweede container toont onafhankelijk eigen HTML. Productiemappen en
+bestaande containers zijn niet gewijzigd.
+
+De officiele Community Applications-scan vindt een geldige Docker-app zonder
+templatewaarschuwingen en bevestigt dat de image downloadbaar is. Dit is nog
+geen indiening of opname in de catalogus.
+
 ## Nog afzonderlijk te verifiëren
 
-- GitHub Actions-build, GHCR-publicatie en anoniem downloaden.
-- Installatie, opslagrechten, WebUI, update en veilige rollback op Unraid.
+- Update en veilige rollback op Unraid tussen twee geteste releases.
 - Community Applications-indiening, toelating en daadwerkelijke vindbaarheid.
 
 Bekende beperkingen: uitsluitend linux/amd64; sessies niet duurzaam bij
