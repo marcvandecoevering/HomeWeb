@@ -1,0 +1,5 @@
+artifacts/
+__pycache__/
+*.tar
+*.env
+docs/hervatten.md

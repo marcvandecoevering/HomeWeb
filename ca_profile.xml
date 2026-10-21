@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommunityApplications>
+  <Profile>ThuisWeb: eenvoudige PHP- en statische websites op je eigen Unraid-server. Onderhouden door marcvandecoevering.</Profile>
+  <Icon>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/assets/icon.png</Icon>
+  <WebPage>https://github.com/marcvandecoevering/ThuisWeb</WebPage>
+  <Forum>https://github.com/marcvandecoevering/ThuisWeb/issues</Forum>
+</CommunityApplications>

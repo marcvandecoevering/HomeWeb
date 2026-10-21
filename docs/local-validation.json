@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-21",
+  "image": {
+    "image_id": "sha256:e4be6f5c89c186205c651793e6611e1c4f3101e7aafee9cefdd703390aa8b33e",
+    "archive_sha256": "a489dd6140e15197a5690140d9c48ad9cca038ba1b05f6b3fc2f55036d0c3a86",
+    "revision": "0e7acc9bc8a82be97a069a25e09af2eef380a395",
+    "php": "8.3.36",
+    "base_image": "php:8.3.36-apache-bookworm@sha256:6c7f5be7c3ca808b110da2175165f3c230c7c48d757494d03cb2cc057572d13f",
+    "scanner": "aquasec/trivy:0.76.1@sha256:2e6c00d711ab4ae41d8a30c2c1fd3bd3b62704c177bb120f95012e939edfb3df",
+    "run": 0,
+    "attempt": 0,
+    "created": "2026-10-21T19:38:06.297403+00:00",
+    "config_digest": "sha256:079067964fb30c7419aed3d7804518f01eb72a8065a82a12fe9c3941f46f4240"
+  },
+  "integration": {
+    "image": "sha256:e4be6f5c89c186205c651793e6611e1c4f3101e7aafee9cefdd703390aa8b33e",
+    "completed": true,
+    "passed": [
+      "empty directory landing and ownership",
+      "HTML, PHP, index preference and rewrite",
+      "PHP errors logged but hidden; server version headers suppressed",
+      "sessions across requests",
+      "worker identity, writable uploads, 32MiB acceptance and oversized rejection",
+      "PHP security floor and required extensions including GD features",
+      "MariaDB, PostgreSQL and SQLite through web PHP",
+      "restart/replacement preserve contents and existing ownership",
+      "hidden files suppress initialization; independent websites and custom IDs",
+      "internal independent health, external isolation, no listing or dotfiles",
+      "invalid environment, inaccessible and read-only directories fail clearly",
+      "custom php.ini override and invalid syntax rejection",
+      "initialization marker prevents landing resurrection"
+    ]
+  },
+  "scan_counts": {
+    "HIGH": 319,
+    "MEDIUM": 1381,
+    "LOW": 616,
+    "UNKNOWN": 4,
+    "CRITICAL": 7
+  },
+  "fixable_high_critical": 0,
+  "note": "Package findings may repeat CVEs. Findings without fixes remain; this is not a security guarantee."
+}
