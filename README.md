@@ -4,8 +4,8 @@ Een eigen Apache/PHP-webserver voor Unraid: één website per container, met een
 Nederlandstalige landingpagina voor nieuwe, volledig lege websitemappen.
 
 **Status: lokaal en in GitHub Actions gebouwd, getest en gescand op 21 oktober 2026.
-De image is openbaar beschikbaar; de Unraid-basistests zijn geslaagd.
-Update/rollback en opname in Community Applications volgen nog.**
+De image is openbaar beschikbaar; Unraid-installatie, update en rollback zijn geslaagd.
+Community Applications heeft de indiening goedgekeurd; zichtbaarheid volgt na de catalogusbuild.**
 Zie [testresultaten](docs/testresultaten.md). Openbare broncode:
 https://github.com/marcvandecoevering/ThuisWeb.
 

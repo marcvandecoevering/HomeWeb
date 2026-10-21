@@ -1,7 +1,11 @@
 # Accountinrichting en publicatie
 
 GitHub-eigenaar: `marcvandecoevering`; repository: `marcvandecoevering/ThuisWeb`.
-Onderstaande lijst beschrijft de procedure; zie testresultaten voor de uitgevoerde stappen. Wachtwoorden en
+De eerste openbare release en anonieme pull zijn geslaagd. Het Community Applications-portaal
+heeft de repository en template zonder waarschuwingen gevalideerd en de indiening op
+21 oktober 2026 automatisch goedgekeurd. De catalogusbuild moet de vermelding nog publiceren.
+Zie testresultaten voor
+de verdere acceptatiestatus. Onderstaande lijst beschrijft de procedure. Wachtwoorden en
 tweestapsverificatie voer je zelf in; deel geen wachtwoorden of tokens in chat.
 
 1. Maak of kies je GitHub-account en activeer tweestapsverificatie. Bevestig de
@@ -14,7 +18,7 @@ tweestapsverificatie voer je zelf in; deel geen wachtwoorden of tokens in chat.
    licentie en alle openbare links. Zoek op https://ca.unraid.net/ naar ThuisWeb;
    laat een conflict eerst beoordelen voordat je de naam wijzigt.
 4. Publiceer de broncode en activeer Actions. Zet branchbescherming/review voor
-   main en workflowwijzigingen aan. De workflow heeft geen persoonlijke token
+   main en workflowwijzigingen desgewenst aan (dit is nog niet ingesteld). De workflow heeft geen persoonlijke token
    nodig: GitHub levert per job een beperkt GITHUB_TOKEN.
 5. Laat de volledige workflow slagen. Controleer `evidence`, het scanrapport,
    SBOM en `publication`. De tags zijn `php8.3` en een unieke
@@ -24,7 +28,8 @@ tweestapsverificatie voer je zelf in; deel geen wachtwoorden of tokens in chat.
    visibility → Public. Koppel aan de repository indien nodig.
 7. Controleer zonder opgeslagen Docker-login, bijvoorbeeld met een tijdelijke
    lege Docker-configmap, `docker --config <lege-map> pull ghcr.io/<owner>/thuisweb:php8.3`.
-   Vergelijk de image-ID met `tested-image.json`. Dit is een verplichte controle,
+   Vergelijk de portable config-digest met `tested-image.json`; Docker-engine image-IDs
+   kunnen bij verschillende opslagdrivers anders worden weergegeven. Dit is een verplichte controle,
    geen aanname op basis van de package-instelling.
 8. Doorloop eerst het afzonderlijke Unraid-testprotocol. Geen wijzigingen aan de
    Kenteken check-container of publiek verkeer.
@@ -37,10 +42,10 @@ tweestapsverificatie voer je zelf in; deel geen wachtwoorden of tokens in chat.
 
 ## Meldingen en onderhoud
 
-Zet in je persoonlijke GitHub-instellingen onder Notifications de Actions-
-meldingen voor mislukte workflows aan (e-mail en/of web). Controleer dit met een
-bewust falende test op een tijdelijke branch, niet door de release te beschadigen.
-Dit is een accountinstelling en kan pas na aanmelden worden bevestigd.
+Op 21 oktober 2026 is in de aangemelde GitHub-accountinstellingen bevestigd:
+Actions -> Email, met Only notify for failed workflows geselecteerd.
+De instelling is actief; daadwerkelijke aflevering van een foutmail is niet getest.
+Controleer bij een echte mislukte run ook je mailbox en spamfilter.
 
 Controleer wekelijks de laatste geplande run, scannerupdates en PHP-advisories.
 GitHub kan geplande workflows in inactieve openbare repositories uitschakelen;

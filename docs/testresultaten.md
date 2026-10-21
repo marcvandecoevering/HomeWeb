@@ -44,6 +44,11 @@ PHP 8.3.36 en de verplichte extensies zijn onafhankelijk van de scanner gecontro
 Scanrapport en CycloneDX-SBOM staan lokaal in artifacts; CI bewaart zijn eigen
 resultaten als workflowartifacts.
 
+De twee openbare CI-releases rapporteren elk 7 Critical, 314 High, 1389 Medium,
+613 Low en 4 Unknown pakketbevindingen, met eveneens nul repareerbare
+HIGH/CRITICAL-bevindingen. De tabel hierboven betreft de eerdere lokale build;
+raadpleeg voor iedere release het eigen scanrapport en SBOM.
+
 ## Eerste openbare release en Unraid-basistests
 
 [GitHub Actions-run 39663665343](https://github.com/marcvandecoevering/ThuisWeb/actions/runs/39663665343)
@@ -64,14 +69,38 @@ alle bestandschecksums en eigenaarschap, inclusief een verborgen bestand.
 Een tweede container toont onafhankelijk eigen HTML. Productiemappen en
 bestaande containers zijn niet gewijzigd.
 
-De officiele Community Applications-scan vindt een geldige Docker-app zonder
-templatewaarschuwingen en bevestigt dat de image downloadbaar is. Dit is nog
-geen indiening of opname in de catalogus.
+De officiële Community Applications-scan vindt een geldige Docker-app zonder
+templatewaarschuwingen en bevestigt dat de image downloadbaar is. Die scan is
+op zichzelf geen indiening of opname in de catalogus.
+
+## Update en rollback op Unraid
+
+Ook [release 2](https://github.com/marcvandecoevering/ThuisWeb/actions/runs/39665014043)
+heeft alle controles en publicatie doorlopen. De proefcontainer is via de Unraid-UI
+van release 1 naar release 2 vervangen en weer naar release 1 teruggezet. In beide
+richtingen bleven alle bestandschecksums, eigenaarschap en rechten gelijk; de PHP-
+schrijfproef en tweede website bleven werken. Beide releases gebruiken PHP 8.3.36
+en hebben geen repareerbare hoge/kritieke scanbevindingen. Dit is geen garantie dat
+terugrollen naar een willekeurige oudere release veilig is.
+Zie [Unraid-testdetails](unraid-test.md).
+
+## Community Applications
+
+Ingediend op 21 oktober 2026; het portaal bevestigt om 21:55:10 (Europe/Amsterdam)
+de status **auto_approved**, met reviewnotitie "Auto-approved for Docker apps
+(non-duplicated)." Repositorynaam: `marccoef's Repository`.
+[Indieningsstatus](https://ca.unraid.net/submissions/repository?url=https://github.com/marcvandecoevering/ThuisWeb)
+(aanmelding vereist).
+
+Het portaal meldt dat de app na de volgende Community Applications-catalogusbuild
+verschijnt. Goedkeuring is dus nog niet hetzelfde als daadwerkelijke vindbaarheid.
+Bij de aansluitende controle meldt de echte Unraid Apps-tab nog "No Matching
+Applications Found"; het portaal toont 0 zichtbare apps. Installatie vanuit de
+catalogus kan daarom nog niet worden beproefd. De XML-installatie is wel getest.
 
 ## Nog afzonderlijk te verifiëren
 
-- Update en veilige rollback op Unraid tussen twee geteste releases.
-- Community Applications-indiening, toelating en daadwerkelijke vindbaarheid.
+- Daadwerkelijke vindbaarheid na de volgende catalogusbuild en installatie vanuit die vermelding.
 
 Bekende beperkingen: uitsluitend linux/amd64; sessies niet duurzaam bij
 containervervanging; geen database/TLS/beheerpaneel; beheerders-php.ini kan defaults
