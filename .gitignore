@@ -3,3 +3,5 @@ __pycache__/
 *.tar
 *.env
 docs/hervatten.md
+www/
+config/

@@ -4,3 +4,5 @@ artifacts
 tests
 docs
 *.tar
+www/
+config/
