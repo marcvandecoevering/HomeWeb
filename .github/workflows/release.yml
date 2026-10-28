@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: thuisweb-${{ github.event_name == 'pull_request' && github.ref || 'release' }}
+  group: homeweb-${{ github.event_name == 'pull_request' && github.ref || 'release' }}
   cancel-in-progress: false
 jobs:
   verify:

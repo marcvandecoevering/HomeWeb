@@ -17,10 +17,10 @@ t = ET.parse(root / 'templates/thuisweb.xml').getroot()
 assert t.findtext('Network') == 'bridge'
 assert t.findtext('Privileged') == 'false'
 assert t.findtext('WebUI') == 'http://[IP]:[PORT:8080]'
-assert t.findtext('Repository').endswith(':php8.3')
+assert t.findtext('Repository').endswith(':php8.5')
 assert {e.attrib['Target'] for e in t.findall('Config')} >= {'8080', '/var/www/html', '/config', 'PUID', 'PGID', 'PHP_MEMORY_LIMIT', 'PHP_UPLOAD_LIMIT', 'TZ'}
 policy = json.loads((root / 'security-policy.json').read_text())
-assert policy['series'] == '8.3'
+assert policy['series'] == '8.5'
 workflow = (root / '.github/workflows/release.yml').read_text()
 for action in re.findall(r'uses:\s*([^\s]+)', workflow):
     assert re.fullmatch(r'[^@]+@[a-f0-9]{40}', action), action

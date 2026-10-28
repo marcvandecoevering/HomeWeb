@@ -1,9 +1,9 @@
 services:
-  thuisweb:
-    image: ghcr.io/marcvandecoevering/thuisweb:php8.3
+  homeweb:
+    image: ghcr.io/marcvandecoevering/homeweb:php8.5
     platform: linux/amd64
     ports:
-      - "127.0.0.1:${THUISWEB_PORT:-8583}:8080"
+      - "127.0.0.1:${HOMEWEB_PORT:-8583}:8080"
     environment:
       PUID: "${PUID:-1000}"
       PGID: "${PGID:-1000}"

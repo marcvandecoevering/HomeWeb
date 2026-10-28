@@ -1,43 +1,40 @@
-# ThuisWeb
+# HomeWeb
 
-![ThuisWeb](assets/icon.png)
+![HomeWeb](assets/icon.png)
 
-**Je eigen website op Unraid of Docker.** ThuisWeb draait HTML en PHP met Apache, in een eigen container per website.
+**Your own website on Unraid or Docker.** Serve HTML and PHP with Apache and PHP 8.5, in a separate container for each website.
 
-## Installeren op Unraid
+## Install on Unraid
 
-1. Zoek **ThuisWeb** in Unraid **Apps** en kies **Install**.
-2. Kies een vrije poort en een map voor je website. De standaardinstellingen staan hieronder.
-3. Open **WebUI** en plaats je websitebestanden in de websitemap. Vervang `index.html` of voeg `index.php` toe; PHP heeft voorrang.
+1. Find **HomeWeb** in **Apps** and select **Install**.
+2. Choose a free port and folders for your website and configuration.
+3. Open **WebUI**. Replace `index.html` with your website, or add `index.php`; PHP takes priority.
 
-Een lege websitemap krijgt een startpagina met live statusbolletjes en de versies van Apache, PHP en OPcache. Bestaande websitebestanden blijven behouden.
+An empty website folder gets a starter page with live Apache, PHP and OPcache versions. Existing files are preserved.
 
-| Instelling | Standaard |
+| Setting | Default |
 | --- | --- |
-| Webpoort | `8583` → `8080` |
-| Websitemap | `/mnt/user/appdata/thuisweb/www` → `/var/www/html` |
-| Configuratiemap | `/mnt/user/appdata/thuisweb/config` → `/config` |
-| PHP-geheugen / uploadlimiet | `256M` / `32M` |
+| Web port | `8583` → `8080` |
+| Website folder | `/mnt/user/appdata/homeweb/www` → `/var/www/html` |
+| Configuration folder | `/mnt/user/appdata/homeweb/config` → `/config` |
+| PHP memory / upload limit | `256M` / `32M` |
 | PUID / PGID | `99` / `100` |
 
-Nog niet zichtbaar in Apps? Voeg de container toe via **Docker → Add Container** met image `ghcr.io/marcvandecoevering/thuisweb:php8.3`, netwerk **bridge** en de poort- en mapkoppelingen hierboven.
+Not listed in Apps yet? Use **Docker → Add Container** with `ghcr.io/marcvandecoevering/homeweb:php8.5`, **bridge** networking and the mappings above. In Advanced View, set **WebUI** to `http://[IP]:[PORT:8080]`.
 
-## Zonder Unraid: Docker op Windows of Linux
+## Use Docker on Windows or Linux
 
-Gebruik het meegeleverde [Docker Compose-bestand](compose.yaml). Met Docker Desktop draai je ThuisWeb lokaal op je Windows-pc. Volg de [Docker-handleiding](docs/docker.md) om te beginnen; een GitHub-account is niet nodig.
+No Unraid required. Follow the [Docker guide](docs/docker.md) to run HomeWeb locally with Docker Desktop or Docker Engine. No GitHub account is needed.
 
-## Meer websites
+## More websites
 
-Installeer ThuisWeb opnieuw met een andere containernaam, een vrije poort en eigen website- en configuratiemappen. Zo heeft iedere website zijn eigen plek.
+Create another container with its own name, free host port, website folder and configuration folder.
 
-## Handig om te weten
+## Good to know
 
-- PHP 8.3 en `.htaccess` worden ondersteund.
-- Gebruik voor een domeinnaam met HTTPS je reverse proxy. Een database voeg je apart toe.
-- Updates installeer je via Unraid. Maak een back-up van je website- en configuratiemappen en eventuele database.
+- Supports `.htaccess`, URL rewriting, sessions, uploads, MySQL/MariaDB, PostgreSQL and SQLite connections.
+- Add your database separately. Use a reverse proxy for a domain and HTTPS.
+- Back up your website, configuration and database before updating.
+- Moving from ThuisWeb? Follow the [migration guide](docs/migration.md) before switching to PHP 8.5.
 
-[Handleiding](docs/handleiding.md) · [Vraag stellen of probleem melden](https://github.com/marcvandecoevering/ThuisWeb/issues) · [MIT-licentie](LICENSE)
-
-## Unraid-catalogus
-
-De installatietemplate wordt onderhouden in [unraid-templates](https://github.com/marcvandecoevering/unraid-templates). De broncode en Docker-releases blijven in deze repository. Het oude templatepad blijft beschikbaar voor bestaande installaties; nieuwe templatewijzigingen horen in de centrale catalogus en de compatibiliteitskopie.
+[User guide](docs/guide.md) · [Support](https://github.com/marcvandecoevering/HomeWeb/issues) · [Unraid templates](https://github.com/marcvandecoevering/unraid-templates) · [MIT license](LICENSE)

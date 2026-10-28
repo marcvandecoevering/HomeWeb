@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <Container version="2">
-  <Name>ThuisWeb</Name>
-  <Repository>ghcr.io/marcvandecoevering/thuisweb:php8.3</Repository>
+  <Name>HomeWeb</Name>
+  <Repository>ghcr.io/marcvandecoevering/homeweb:php8.5</Repository>
   <Registry>https://ghcr.io</Registry>
   <Network>bridge</Network>
-  <MyIP/>
+  <MyIP />
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/marcvandecoevering/ThuisWeb/issues</Support>
-  <Project>https://github.com/marcvandecoevering/ThuisWeb</Project>
-  <Overview>Een eigen Apache/PHP 8.3-webserver met een rustige Nederlandstalige startpagina. Eén website per container; databases installeer je apart. Voor een tweede website kies je een andere containernaam, hostpoort, websitemap én configuratiemap. Installatie publiceert de website niet automatisch op internet.</Overview>
-  <Description>HTML, CSS, JavaScript en PHP, met .htaccess, URL-herschrijving, sessies en uploads. MySQL/MariaDB, PostgreSQL en SQLite worden vanuit PHP ondersteund. Webverzoeken draaien onder PUID/PGID; het opstartproces gebruikt root voor initialisatie. Bestaande websitebestanden worden niet overschreven of automatisch van eigenaar veranderd. Optioneel /config/php.ini is vertrouwde beheerdersconfiguratie en wordt bij herstart toegepast. Updates installeer je via Unraid.</Description>
+  <Support>https://github.com/marcvandecoevering/HomeWeb/issues</Support>
+  <Project>https://github.com/marcvandecoevering/HomeWeb</Project>
+  <Overview>Your own Apache and PHP 8.5 web server. One website per container, with a clean starter page and live component versions. Add databases separately. For another website, use a different container name, host port, website folder and configuration folder.</Overview>
+  <Description>Host HTML, CSS, JavaScript and PHP with .htaccess, URL rewriting, sessions and uploads. PHP supports MySQL/MariaDB, PostgreSQL and SQLite. Web requests run as PUID/PGID; initialization uses root. Existing website files and their ownership are preserved. Optional /config/php.ini is trusted administrator configuration, applied on restart. Install updates through Unraid. Configure internet access and HTTPS separately.</Description>
   <Category>Network:Web Tools:</Category>
   <WebUI>http://[IP]:[PORT:8080]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/marcvandecoevering/unraid-templates/main/templates/thuisweb.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/assets/icon.png?v=3</Icon>
-  <Config Name="Webpoort" Target="8080" Default="8583" Mode="tcp" Description="Kies voor iedere website een vrije hostpoort." Type="Port" Display="always" Required="true" Mask="false">8583</Config>
-  <Config Name="Websitebestanden" Target="/var/www/html" Default="/mnt/user/appdata/thuisweb/www" Mode="rw" Description="Gebruik voor iedere website een aparte map. Alleen een volledig lege map krijgt een landingpagina." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/thuisweb/www</Config>
-  <Config Name="Configuratie" Target="/config" Default="/mnt/user/appdata/thuisweb/config" Mode="rw" Description="Aparte configuratiemap per website; optioneel php.ini en initialisatiestatus." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/thuisweb/config</Config>
-  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="Niet-root numeriek gebruikers-ID." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
-  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Niet-root numeriek groeps-ID." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
-  <Config Name="PHP geheugenlimiet" Target="PHP_MEMORY_LIMIT" Default="256M" Mode="" Description="Positieve waarde in M of G, groter dan uploadlimiet plus overhead." Type="Variable" Display="always" Required="true" Mask="false">256M</Config>
-  <Config Name="Uploadlimiet" Target="PHP_UPLOAD_LIMIT" Default="32M" Mode="" Description="Limiet per bestand. post_max_size krijgt automatisch extra multipart-ruimte." Type="Variable" Display="always" Required="true" Mask="false">32M</Config>
-  <Config Name="Tijdzone" Target="TZ" Default="Europe/Amsterdam" Mode="" Description="Geldige IANA-tijdzone." Type="Variable" Display="always" Required="true" Mask="false">Europe/Amsterdam</Config>
+  <Icon>https://raw.githubusercontent.com/marcvandecoevering/HomeWeb/main/assets/icon.png?v=3</Icon>
+  <Config Name="Web port" Target="8080" Default="8583" Mode="tcp" Description="Choose a free host port for each website." Type="Port" Display="always" Required="true" Mask="false">8583</Config>
+  <Config Name="Website files" Target="/var/www/html" Default="/mnt/user/appdata/homeweb/www" Mode="rw" Description="Use a separate folder for each website. Only a completely empty folder receives the starter page." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/homeweb/www</Config>
+  <Config Name="Configuration" Target="/config" Default="/mnt/user/appdata/homeweb/config" Mode="rw" Description="Separate configuration folder for each website; stores optional php.ini and initialization state." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/homeweb/config</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="Positive non-root numeric user ID." Type="Variable" Display="always" Required="true" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Positive non-root numeric group ID." Type="Variable" Display="always" Required="true" Mask="false">100</Config>
+  <Config Name="PHP memory limit" Target="PHP_MEMORY_LIMIT" Default="256M" Mode="" Description="Positive size in M or G; must cover the upload limit plus overhead." Type="Variable" Display="always" Required="true" Mask="false">256M</Config>
+  <Config Name="Upload limit" Target="PHP_UPLOAD_LIMIT" Default="32M" Mode="" Description="Maximum size per file. post_max_size includes extra multipart overhead." Type="Variable" Display="always" Required="true" Mask="false">32M</Config>
+  <Config Name="Time zone" Target="TZ" Default="Europe/Amsterdam" Mode="" Description="Valid IANA time zone." Type="Variable" Display="always" Required="true" Mask="false">Europe/Amsterdam</Config>
 </Container>

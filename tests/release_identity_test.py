@@ -31,13 +31,13 @@ class IdentityTests(unittest.TestCase):
             self.assertNotEqual(original, fingerprint(root, 'php@sha256:one', 'php 1 amd64\napache 2 amd64'))
             self.assertFalse(unchanged({}, original))  # migrate legacy images once
             self.assertFalse(unchanged({LABEL: 'different'}, original))
-            self.assertTrue(unchanged({LABEL: original, 'nl.thuisweb.run': 'older'}, original))
+            self.assertTrue(unchanged({LABEL: original, 'nl.homeweb.run': 'older'}, original))
             with self.assertRaises(ValueError):
                 fingerprint(root, 'base', '')
 
     def test_publisher_skips_without_login_or_push(self):
         import hashlib
-        env = {'GITHUB_REPOSITORY':'owner/ThuisWeb', 'GH_TOKEN':'test', 'GITHUB_ACTOR':'owner',
+        env = {'GITHUB_REPOSITORY':'owner/HomeWeb', 'GH_TOKEN':'test', 'GITHUB_ACTOR':'owner',
                'GITHUB_REF':'refs/heads/main', 'GITHUB_EVENT_NAME':'schedule', 'GITHUB_SHA':'revision',
                'GITHUB_RUN_NUMBER':'2', 'GITHUB_RUN_ID':'100', 'GITHUB_RUN_ATTEMPT':'1'}
         cwd = Path.cwd()
@@ -59,7 +59,7 @@ class IdentityTests(unittest.TestCase):
                         'config_digest':digest,'archive_sha256':hashlib.sha256(Path('artifacts/image.tar').read_bytes()).hexdigest()}
                 Path('artifacts/tested-image.json').write_text(json.dumps(meta))
                 responses = [{'object':{'sha':'revision'}},{'token':'test'},
-                             {'config':{'Labels':{LABEL:'same','nl.thuisweb.run':'1','nl.thuisweb.attempt':'1'}}}]
+                             {'config':{'Labels':{LABEL:'same','nl.homeweb.run':'1','nl.homeweb.attempt':'1'}}}]
                 with patch.object(pub,'get',side_effect=responses), patch.object(pub,'platform_manifest',return_value={'config':{'digest':'previous'}}), patch.object(pub,'command') as command:
                     pub.main()
                     self.assertFalse(any(c.args[:2] in [('docker','push'),('docker','login'),('docker','tag')] for c in command.call_args_list))

@@ -2,7 +2,7 @@
 import hashlib
 import json
 
-LABEL = 'nl.thuisweb.release-fingerprint'
+LABEL = 'nl.homeweb.release-fingerprint'
 
 def fingerprint(root, base, packages):
     paths = [root / 'Dockerfile', root / 'security-policy.json']

@@ -14,7 +14,7 @@ from release_identity import LABEL, unchanged
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
 repository = os.environ['GITHUB_REPOSITORY'].lower()
-name = repository.split('/')[0] + '/thuisweb'
+name = repository.split('/')[0] + '/homeweb'
 image = 'ghcr.io/' + name
 token = os.environ['GH_TOKEN']
 actor = os.environ['GITHUB_ACTOR']
@@ -49,7 +49,7 @@ def main():
     registry_token = get('https://ghcr.io/token?'+urllib.parse.urlencode({'service':'ghcr.io','scope':f'repository:{name}:pull,push'}), {'Authorization':'Basic '+auth})['token']
     headers = {'Authorization':'Bearer '+registry_token, 'Accept':'application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json'}
     try:
-        previous = platform_manifest('php8.3', headers)
+        previous = platform_manifest('php8.5', headers)
     except urllib.error.HTTPError as error:
         if error.code != 404: raise
         previous = None
@@ -57,7 +57,7 @@ def main():
     if previous:
         config = get(f'https://ghcr.io/v2/{name}/blobs/'+previous['config']['digest'], headers)
         labels = config['config']['Labels']
-        old = (int(labels['nl.thuisweb.run']), int(labels['nl.thuisweb.attempt']))
+        old = (int(labels['nl.homeweb.run']), int(labels['nl.homeweb.attempt']))
         if old >= (meta['run'], meta['attempt']):
             raise RuntimeError('A same or newer release is already published')
     with pathlib.Path('artifacts/image.tar').open('rb') as f:
@@ -65,7 +65,7 @@ def main():
     command('docker', 'load', '-i', 'artifacts/image.tar')
     # Docker's classic and containerd stores report different .Id formats.
     # Verify the portable config digest, including rootfs layer diffIDs.
-    command('docker', 'save', '-o', 'artifacts/loaded-image.tar', 'thuisweb:test')
+    command('docker', 'save', '-o', 'artifacts/loaded-image.tar', 'homeweb:test')
     with tarfile.open('artifacts/loaded-image.tar') as archive:
         entries = json.load(archive.extractfile('manifest.json'))
         assert len(entries) == 1
@@ -76,7 +76,7 @@ def main():
     pathlib.Path('artifacts/loaded-image.tar').unlink()
     if unchanged(labels, meta['release_fingerprint']):
         pathlib.Path('artifacts/published.json').write_text(json.dumps({
-            'status': 'unchanged', 'stable': image+':php8.3',
+            'status': 'unchanged', 'stable': image+':php8.5',
             'release_fingerprint': meta['release_fingerprint'],
             'retained_config_digest': previous['config']['digest'],
         }, indent=2))
@@ -92,15 +92,15 @@ def main():
         raise RuntimeError('Unique build tag already exists')
     command('docker','login','ghcr.io','-u',actor,'--password-stdin',input=token)
     try:
-        command('docker','tag','thuisweb:test',unique)
+        command('docker','tag','homeweb:test',unique)
         command('docker','push',unique)
         manifest = platform_manifest(unique.split(':')[-1], headers)
         assert manifest['config']['digest'] == meta['config_digest']
-        command('docker','tag','thuisweb:test',image+':php8.3')
-        command('docker','push',image+':php8.3')
-        stable = platform_manifest('php8.3', headers)
+        command('docker','tag','homeweb:test',image+':php8.5')
+        command('docker','push',image+':php8.5')
+        stable = platform_manifest('php8.5', headers)
         assert stable['config']['digest'] == meta['config_digest']
-        pathlib.Path('artifacts/published.json').write_text(json.dumps({'unique':unique,'stable':image+':php8.3','image_id':meta['image_id']},indent=2))
+        pathlib.Path('artifacts/published.json').write_text(json.dumps({'unique':unique,'stable':image+':php8.5','image_id':meta['image_id']},indent=2))
     finally:
         command('docker','logout','ghcr.io')
 

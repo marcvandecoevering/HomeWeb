@@ -1,4 +1,4 @@
-"""Resolve latest official PHP 8.3 patch and its linux/amd64 registry digest. Fail closed."""
+"""Resolve latest official PHP 8.5 patch and its linux/amd64 registry digest. Fail closed."""
 import hashlib
 import json
 import pathlib
@@ -26,9 +26,9 @@ def docker_digest(repo, tag):
 
 def main():
     policy = json.loads((ROOT / 'security-policy.json').read_text())
-    release = json.loads(fetch('https://www.php.net/releases/index.php?json&version=8.3'))
+    release = json.loads(fetch('https://www.php.net/releases/index.php?json&version=8.5'))
     version = release['version']
-    if not re.fullmatch(r'8\.3\.\d+', version):
+    if not re.fullmatch(r'8\.5\.\d+', version):
         raise RuntimeError('Invalid PHP series')
     if tuple(map(int, version.split('.'))) < tuple(map(int, policy['minimum'].split('.'))):
         raise RuntimeError('Upstream PHP version below security minimum')

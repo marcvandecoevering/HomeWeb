@@ -1,5 +1,5 @@
 """Real Docker integration tests, only UUID-named resources are cleaned up.
-Run: python tests/integration.py thuisweb:test
+Run: python tests/integration.py homeweb:test
 Requires a Linux Docker engine. No production mounts or ports are used.
 """
 import json
@@ -10,7 +10,7 @@ import time
 import uuid
 
 IMAGE = sys.argv[1]
-PREFIX = 'thuisweb-test-' + uuid.uuid4().hex[:12]
+PREFIX = 'homeweb-test-' + uuid.uuid4().hex[:12]
 containers, volumes, networks = [], [], []
 results = []
 completed = False
@@ -74,33 +74,41 @@ try:
     mounts = ('-v', web + ':/var/www/html', '-v', config + ':/config')
     app = run('app', *mounts)
     ready(app)
-    assert 'Je webserver staat klaar' in request(app)
+    assert 'Your web server is ready' in request(app)
     assert exec_(app, 'stat', '-c', '%u:%g', '/var/www/html') == '99:100'
     passed('empty directory landing and ownership')
-    status = json.loads(request(app, '/__thuisweb/status'))
+    status = json.loads(request(app, '/__homeweb/status'))
     assert status['php'] == exec_(app, 'php', '-r', 'echo PHP_VERSION;')
-    assert status['apache'] == exec_(app, 'cat', '/opt/thuisweb/apache-version')
+    assert status['apache'] == exec_(app, 'cat', '/opt/homeweb/apache-version')
     assert status['apache'].startswith('2.4.') and status['opcacheEnabled'] is True
     assert set(status) == {'php', 'apache', 'opcache', 'opcacheEnabled', 'build'}
-    assert 'Cache-Control: no-store' in request(app, '/__thuisweb/status', '-D', '-')
-    write(app, '/var/www/html/index.html', '<h1>Eigen website</h1>')
-    assert request(app, '/__thuisweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
+    assert 'Cache-Control: no-store' in request(app, '/__homeweb/status', '-D', '-')
+    write(app, '/var/www/html/index.html', '<h1>My website</h1>')
+    assert request(app, '/__homeweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
     # cat/strip removes the trailing newline, so restore from the shipped template.
-    exec_(app, 'cp', '/opt/thuisweb/index.html', '/var/www/html/index.html')
-    assert json.loads(request(app, '/__thuisweb/status'))['php'] == status['php']
+    exec_(app, 'cp', '/opt/homeweb/index.html', '/var/www/html/index.html')
+    assert json.loads(request(app, '/__homeweb/status'))['php'] == status['php']
     passed('live landing versions; replaced page disables version endpoint')
+    # Legacy mounts retain their files and version opt-in after migration.
+    exec_(app, 'mv', '/config/.homeweb-landing.sha256', '/config/.thuisweb-landing.sha256')
+    assert json.loads(request(app, '/__thuisweb/status'))['php'] == status['php']
+    assert json.loads(request(app, '/__homeweb/status'))['php'] == status['php']
+    write(app, '/var/www/html/index.html', 'my-custom-page')
+    assert request(app, '/__thuisweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
+    exec_(app, 'cp', '/opt/homeweb/index.html', '/var/www/html/index.html')
+    passed('legacy landing fingerprint and endpoint preserve version privacy')
     write(app, '/var/www/html/hello.html', 'hello-static')
     write(app, '/var/www/html/index.php', '<?php echo "php-first";')
     assert request(app) == 'php-first'
-    assert request(app, '/__thuisweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
+    assert request(app, '/__homeweb/status', '-o', '/dev/null', '-w', '%{http_code}') == '404'
     assert request(app, '/hello.html') == 'hello-static'
     write(app, '/var/www/html/.htaccess', 'RewriteEngine On\nRewriteRule ^rewritten$ hello.html [L]\n')
     assert request(app, '/rewritten') == 'hello-static'
     passed('HTML, PHP, index preference and rewrite')
-    write(app, '/var/www/html/error.php', '<?php trigger_error("thuisweb-test-error-sentinel", E_USER_WARNING); echo "safe-response";')
+    write(app, '/var/www/html/error.php', '<?php trigger_error("homeweb-test-error-sentinel", E_USER_WARNING); echo "safe-response";')
     assert request(app, '/error.php') == 'safe-response'
     logs = subprocess.run(['docker', 'logs', app], capture_output=True, text=True)
-    assert 'thuisweb-test-error-sentinel' in logs.stdout + logs.stderr
+    assert 'homeweb-test-error-sentinel' in logs.stdout + logs.stderr
     headers = request(app, '/', '-I')
     assert 'X-Powered-By:' not in headers and 'PHP/' not in headers and 'Apache/' not in headers
     passed('PHP errors logged but hidden; server version headers suppressed')
@@ -108,6 +116,8 @@ try:
     assert request(app, '/session.php', '-c', '/tmp/cookies') == '1'
     assert request(app, '/session.php', '-b', '/tmp/cookies') == '2'
     passed('sessions across requests')
+    write(app, '/var/www/html/progress.php', '<?php echo ini_get("session.upload_progress.enabled") ? "enabled" : "disabled";')
+    assert request(app, '/progress.php') == 'disabled'
     write(app, '/var/www/html/identity.php', '<?php echo posix_geteuid().":".posix_getegid();')
     assert request(app, '/identity.php') == '99:100'
     exec_(app, 'mkdir', '/var/www/html/uploads')
@@ -120,8 +130,8 @@ try:
     exec_(app, 'truncate', '-s', str(42*1024*1024), '/tmp/upload')
     assert request(app, '/upload.php', '-F', 'file=@/tmp/upload', '-w', '%{http_code}') == 'rejected413'
     passed('worker identity, writable uploads, 32MiB acceptance and oversized rejection')
-    version = exec_(app, 'php', '/opt/thuisweb/check.php')
-    assert version.startswith('8.3.')
+    version = exec_(app, 'php', '/opt/homeweb/check.php')
+    assert version.startswith('8.5.')
     passed('PHP security floor and required extensions including GD features')
     write(app, '/var/www/html/sqlite.php', '<?php $db=new PDO("sqlite::memory:"); echo $db->query("SELECT 42")->fetchColumn();')
     assert request(app, '/sqlite.php') == '42'
@@ -166,13 +176,16 @@ try:
     expect_failure('bad-tz', '-e', 'TZ=bad-zone', message='TZ')
     locked = volume('locked')
     docker('run', '--rm', '--entrypoint', 'sh', '-v', locked+':/var/www/html', IMAGE, '-c', 'touch /var/www/html/.keep; chmod 700 /var/www/html')
-    expect_failure('locked', '-v', locked+':/var/www/html', message='niet leesbaar')
+    expect_failure('locked', '-v', locked+':/var/www/html', message='not readable')
     empty_ro = volume('readonly')
     expect_failure('readonly', '-v', empty_ro+':/var/www/html:ro', message='Read-only')
     passed('invalid environment, inaccessible and read-only directories fail clearly')
-    write(app, '/config/php.ini', 'memory_limit=512M\n')
+    write(app, '/config/php.ini', 'memory_limit=512M\nsession.upload_progress.enabled=1\n')
     docker('restart', app); ready(app)
     assert exec_(app, 'php', '-r', 'echo ini_get("memory_limit");') == '512M'
+    exec_(app, 'rm', '/var/www/html/.htaccess')
+    assert request(app, '/progress.php') == 'disabled'
+    passed('HTTP upload-progress mitigation survives custom php.ini override')
     write(app, '/config/php.ini', 'memory_limit="unterminated\n')
     docker('restart', app)
     for _ in range(20):
@@ -186,6 +199,10 @@ try:
     docker('restart', app); ready(app)
     assert exec_(app, 'ls', '-A', '/var/www/html') == ''
     passed('initialization marker prevents landing resurrection')
+    exec_(app, 'mv', '/config/.homeweb-initialized', '/config/.thuisweb-initialized')
+    docker('restart', app); ready(app)
+    assert exec_(app, 'ls', '-A', '/var/www/html') == ''
+    passed('legacy initialization marker prevents landing resurrection')
     completed = True
 finally:
     pathlib.Path('artifacts').mkdir(exist_ok=True)

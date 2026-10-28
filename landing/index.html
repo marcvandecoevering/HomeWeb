@@ -1,37 +1,37 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23215440%22%20d%3D%22M20%20112%20116%2029Q128%2019%20140%2029L181%2064V47Q181%2040%20188%2040H204Q211%2040%20211%2047V90L237%20112Q246%20121%20234%20127H219V215Q219%20232%20202%20232H54Q37%20232%2037%20215V127H22Q10%20123%2020%20112Z%22%2F%3E%3Cpath%20fill%3D%22%23f5f3eb%22%20d%3D%22M84%20204C65%20204%2054%20191%2054%20175C54%20159%2067%20146%2083%20146H87C87%20124%20105%20106%20127%20106C148%20106%20165%20122%20168%20143C187%20144%20202%20157%20202%20175C202%20192%20189%20204%20171%20204Z%22%2F%3E%3C%2Fsvg%3E">
-<title>ThuisWeb — klaar voor jouw website</title>
+<title>HomeWeb — ready for your website</title>
 <style>
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#233d33;background:#f5f2e9}*{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:48px 32px}header{display:flex;align-items:center;gap:12px;font-weight:750;font-size:22px}.brand-mark{width:56px;height:56px;flex:none}header{gap:14px;font-size:25px;letter-spacing:-.8px}.status{color:#41634f}.status{display:inline-flex;align-items:center;gap:9px;margin-top:90px;font-size:13px;background:#e5ebdd;padding:9px 14px;border-radius:99px}.dot{width:7px;height:7px;background:#37734c;border-radius:50%}h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(42px,7vw,78px);line-height:1.08;letter-spacing:-2px;max-width:800px;margin:24px 0}p{line-height:1.7}.intro{max-width:590px;color:#5d6b61;font-size:18px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:54px 0 32px}.step{padding:26px;border:1px solid #d8dfd1;border-radius:16px;background:#fffdf7}.number{color:#6b7d69;font-size:12px;font-weight:bold;letter-spacing:2px}h2{font-size:18px;margin-top:22px}.step p{font-size:14px;color:#5d6b61}code{font-size:12px;background:#e8ecdf;padding:4px 6px;border-radius:5px;overflow-wrap:anywhere}.note{border-top:1px solid #d8dfd1;padding-top:22px;font-size:13px;color:#657165}footer{margin-top:48px;font-size:12px;color:#73816e}@media(max-width:700px){main{padding:28px 22px}.status{margin-top:60px}.steps{grid-template-columns:1fr;gap:12px}h1{letter-spacing:-1px}.step{padding:22px}}
 
 .system{margin-top:42px;border:1px solid #d5dfd0;border-radius:20px;background:#eeefe5;overflow:hidden}.system-heading{display:flex;justify-content:space-between;gap:12px;padding:19px 24px;border-bottom:1px solid #d5dfd0;font-size:10px;font-weight:650;letter-spacing:1.6px}.system-heading #checked{font-size:11px;letter-spacing:0;font-weight:400;color:#68766a}.services{display:grid;grid-template-columns:repeat(4,1fr)}.service{padding:24px;display:flex;flex-direction:column;gap:10px;min-width:0}.service+.service{border-left:1px solid #d5dfd0}.service-top{display:flex;align-items:center;gap:8px;color:#5f7363;font-size:12px}.service strong{font-size:17px;font-weight:650;letter-spacing:-.3px}.service-detail{font-size:12px;color:#627366;overflow-wrap:anywhere}.system-note{font-size:11px;color:#69786a;margin:0;padding:0 24px 18px}.dot{display:inline-block;flex:none;width:7px;height:7px;background:#36764c;box-shadow:0 0 0 3px #36764c12}.dot.pending{background:#a8ab9e;box-shadow:none}.dot.off{background:#b77b35;box-shadow:0 0 0 3px #b77b3512}.dot.error{background:#aa5547;box-shadow:0 0 0 3px #aa554712}.steps{margin-top:28px}.status{margin-top:64px}@media(max-width:700px){.services{grid-template-columns:repeat(2,minmax(0,1fr))}.service{padding:20px}.service:nth-child(3){border-left:0}.service:nth-child(n+3){border-top:1px solid #d5dfd0}.system-heading{padding:17px 20px;flex-wrap:wrap}.system-note{padding:0 20px 18px;margin-top:8px}.service strong{font-size:15px}.brand-mark{width:48px;height:48px}}
 </style>
 <main>
-<header><svg class="brand-mark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path fill="#215440" d="M20 112 116 29Q128 19 140 29L181 64V47Q181 40 188 40H204Q211 40 211 47V90L237 112Q246 121 234 127H219V215Q219 232 202 232H54Q37 232 37 215V127H22Q10 123 20 112Z"/><path fill="#f5f3eb" d="M84 204C65 204 54 191 54 175C54 159 67 146 83 146H87C87 124 105 106 127 106C148 106 165 122 168 143C187 144 202 157 202 175C202 192 189 204 171 204Z"/></svg> ThuisWeb</header>
-<div class="status" id="server-status"><span class="dot pending"></span><span id="server-label">Je webserver staat klaar</span></div>
-<h1>Een eigen plek.<br>Voor jouw website.</h1>
-<p class="intro">Alles staat klaar om te beginnen. Maak van deze pagina jouw eigen website, van een eerste idee tot iets om te delen.</p>
-<section class="system" aria-label="Serverstatus">
-<div class="system-heading"><span>ONDER DE MOTORKAP</span><span id="checked" role="status">Verbinding controleren…</span></div>
+<header><svg class="brand-mark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path fill="#215440" d="M20 112 116 29Q128 19 140 29L181 64V47Q181 40 188 40H204Q211 40 211 47V90L237 112Q246 121 234 127H219V215Q219 232 202 232H54Q37 232 37 215V127H22Q10 123 20 112Z"/><path fill="#f5f3eb" d="M84 204C65 204 54 191 54 175C54 159 67 146 83 146H87C87 124 105 106 127 106C148 106 165 122 168 143C187 144 202 157 202 175C202 192 189 204 171 204Z"/></svg> HomeWeb</header>
+<div class="status" id="server-status"><span class="dot pending"></span><span id="server-label">Your web server is ready</span></div>
+<h1>A place of your own.<br>For your website.</h1>
+<p class="intro">Everything is ready. Turn this page into your own website, from a first idea to something worth sharing.</p>
+<section class="system" aria-label="Server status">
+<div class="system-heading"><span>UNDER THE HOOD</span><span id="checked" role="status">Checking connection…</span></div>
 <div class="services">
-<div class="service"><span class="service-top"><span class="dot pending" id="apache-dot"></span>Webserver</span><strong>Apache <span id="apache-version">—</span></strong><span class="service-detail" id="apache-state">Controleren…</span></div>
-<div class="service"><span class="service-top"><span class="dot pending" id="php-dot"></span>PHP-engine</span><strong>PHP <span id="php-version">—</span></strong><span class="service-detail" id="php-state">Controleren…</span></div>
-<div class="service"><span class="service-top"><span class="dot pending" id="opcache-dot"></span>Versnelling</span><strong>OPcache <span id="opcache-version">—</span></strong><span class="service-detail" id="opcache-state">Controleren…</span></div>
-<div class="service"><span class="service-top"><span class="dot pending" id="build-dot"></span>Deze installatie</span><strong>ThuisWeb</strong><span class="service-detail" id="build-version">Build ophalen…</span></div>
+<div class="service"><span class="service-top"><span class="dot pending" id="apache-dot"></span>Web server</span><strong>Apache <span id="apache-version">—</span></strong><span class="service-detail" id="apache-state">Checking…</span></div>
+<div class="service"><span class="service-top"><span class="dot pending" id="php-dot"></span>PHP engine</span><strong>PHP <span id="php-version">—</span></strong><span class="service-detail" id="php-state">Checking…</span></div>
+<div class="service"><span class="service-top"><span class="dot pending" id="opcache-dot"></span>Acceleration</span><strong>OPcache <span id="opcache-version">—</span></strong><span class="service-detail" id="opcache-state">Checking…</span></div>
+<div class="service"><span class="service-top"><span class="dot pending" id="build-dot"></span>This installation</span><strong>HomeWeb</strong><span class="service-detail" id="build-version">Loading build…</span></div>
 </div>
-<p class="system-note">Live gecontroleerd in deze container. Dit zegt niets over internettoegang of de werking van je eigen website.</p>
+<p class="system-note">Live information from this container. This does not check internet access or the health of your own website.</p>
 </section>
-<section class="steps" aria-label="Aan de slag">
-<article class="step"><span class="number">01 / PLAATS</span><h2>Voeg je bestanden toe</h2><p>Plaats je HTML-, CSS-, JavaScript- en PHP-bestanden in de websitemap die je bij installatie hebt gekozen.</p><code>/var/www/html</code></article>
-<article class="step"><span class="number">02 / VERVANG</span><h2>Maak het jouw startpagina</h2><p>Vervang dit bestand, <code>index.html</code>, door je eigen pagina. Gebruik je PHP? Dan krijgt <code>index.php</code> voorrang.</p></article>
-<article class="step"><span class="number">03 / BEKIJK</span><h2>Open je website</h2><p>Ververs deze pagina om je website te bekijken. Via de WebUI-knop in Unraid kom je hier eenvoudig terug.</p></article>
+<section class="steps" aria-label="Get started">
+<article class="step"><span class="number">01 / ADD</span><h2>Add your files</h2><p>Place your HTML, CSS, JavaScript and PHP files in the website folder you selected during installation.</p><code>/var/www/html</code></article>
+<article class="step"><span class="number">02 / REPLACE</span><h2>Make it your home page</h2><p>Replace this <code>index.html</code> file with your own page. Using PHP? <code>index.php</code> takes priority.</p></article>
+<article class="step"><span class="number">03 / VIEW</span><h2>Open your website</h2><p>Refresh this page to see your website. On Unraid, use the WebUI button to return here.</p></article>
 </section>
-<p class="note">Je website draait op je eigen server. Installatie maakt hem niet automatisch bereikbaar op internet. Een domein, HTTPS en toegang van buitenaf stel je afzonderlijk in.</p>
-<footer>THUISWEB &nbsp; / &nbsp; Jouw bestanden. Jouw server.</footer>
+<p class="note">Your website runs on your own server. Installation does not automatically expose it to the internet. Configure your domain, HTTPS and external access separately.</p>
+<footer>HOMEWEB &nbsp; / &nbsp; Your files. Your server.</footer>
 </main>
 <script>
 const text = (id, value) => { document.getElementById(id).textContent = value; };
@@ -40,28 +40,28 @@ async function refreshStatus() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const response = await fetch('/__thuisweb/status', {cache: 'no-store', signal: controller.signal});
+    const response = await fetch('/__homeweb/status', {cache: 'no-store', signal: controller.signal});
     if (!response.ok) throw new Error('Status unavailable');
     const data = await response.json();
     if (!data.php || !data.apache || typeof data.opcacheEnabled !== 'boolean') throw new Error('Invalid status');
     text('php-version', data.php); text('apache-version', data.apache); text('opcache-version', data.opcache || '—');
-    text('php-state', 'Actief'); text('apache-state', 'Actief');
-    text('opcache-state', data.opcacheEnabled ? 'Ingeschakeld' : 'Uitgeschakeld');
-    text('build-version', data.build === 'local' ? 'Lokale build' : 'Build ' + data.build.slice(0, 12));
+    text('php-state', 'Running'); text('apache-state', 'Running');
+    text('opcache-state', data.opcacheEnabled ? 'Enabled' : 'Disabled');
+    text('build-version', data.build === 'local' ? 'Local build' : 'Build ' + data.build.slice(0, 12));
     ['php-dot', 'apache-dot', 'build-dot'].forEach(id => dot(id));
     dot('opcache-dot', data.opcacheEnabled ? '' : 'off');
     document.querySelector('#server-status .dot').className = 'dot';
-    text('server-label', 'Je webserver staat klaar');
-    text('checked', 'Gecontroleerd om ' + new Date().toLocaleTimeString('nl-NL', {hour:'2-digit', minute:'2-digit'}));
+    text('server-label', 'Your web server is ready');
+    text('checked', 'Checked at ' + new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'}));
   } catch {
     ['php-dot', 'apache-dot', 'opcache-dot', 'build-dot'].forEach(id => dot(id, 'error'));
     ['php-version', 'apache-version', 'opcache-version'].forEach(id => text(id, '—'));
-    ['php-state', 'apache-state', 'opcache-state'].forEach(id => text(id, 'Niet bereikbaar'));
-    text('build-version', 'Niet beschikbaar'); text('checked', 'Geen actuele status');
+    ['php-state', 'apache-state', 'opcache-state'].forEach(id => text(id, 'Status unavailable'));
+    text('build-version', 'Unavailable'); text('checked', 'Live status unavailable');
     document.querySelector('#server-status .dot').className = 'dot error';
-    text('server-label', 'Serverstatus niet bereikbaar');
+    text('server-label', 'Server status unavailable');
   } finally { clearTimeout(timeout); }
 }
 refreshStatus(); setInterval(refreshStatus, 30000);
 </script>
-<noscript><p class="note">Schakel JavaScript in om de actuele serverversies en status te bekijken.</p></noscript></html>
+<noscript><p class="note">Enable JavaScript to see current server versions and status.</p></noscript></html>

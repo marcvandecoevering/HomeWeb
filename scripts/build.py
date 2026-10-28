@@ -30,24 +30,24 @@ def main():
     attempt = os.environ.get('GITHUB_RUN_ATTEMPT', '0')
     command('docker', 'build', '--pull', '--no-cache', '--platform', 'linux/amd64', '--build-arg', 'BASE_IMAGE='+base,
             '--build-arg', 'SOURCE_REVISION='+revision,
-            '--label', 'org.opencontainers.image.source=https://github.com/'+os.environ.get('GITHUB_REPOSITORY', 'unpublished/thuisweb'),
-            '--label', 'nl.thuisweb.run='+run, '--label', 'nl.thuisweb.attempt='+attempt,
-            '-t', 'thuisweb:test', '.')
-    packages = command('docker', 'run', '--rm', '--entrypoint', 'dpkg-query', 'thuisweb:test',
+            '--label', 'org.opencontainers.image.source=https://github.com/'+os.environ.get('GITHUB_REPOSITORY', 'unpublished/homeweb'),
+            '--label', 'nl.homeweb.run='+run, '--label', 'nl.homeweb.attempt='+attempt,
+            '-t', 'homeweb:test', '.')
+    packages = command('docker', 'run', '--rm', '--entrypoint', 'dpkg-query', 'homeweb:test',
                        '-W', '-f=${Package}\t${Version}\t${Architecture}\n', capture=True)
     identity = fingerprint(ROOT, base, packages)
     # Add comparison metadata BEFORE testing; never modify the tested image afterward.
-    container = command('docker', 'create', 'thuisweb:test', capture=True)
+    container = command('docker', 'create', 'homeweb:test', capture=True)
     try:
-        command('docker', 'commit', '--change', f'LABEL {LABEL}={identity}', container, 'thuisweb:test')
+        command('docker', 'commit', '--change', f'LABEL {LABEL}={identity}', container, 'homeweb:test')
     finally:
         command('docker', 'rm', container)
-    image_id = command('docker', 'image', 'inspect', '--format', '{{.Id}}', 'thuisweb:test', capture=True)
-    version = command('docker', 'run', '--rm', '--entrypoint', 'php', image_id, '/opt/thuisweb/check.php', capture=True)
+    image_id = command('docker', 'image', 'inspect', '--format', '{{.Id}}', 'homeweb:test', capture=True)
+    version = command('docker', 'run', '--rm', '--entrypoint', 'php', image_id, '/opt/homeweb/check.php', capture=True)
     expected = json.loads((OUT/'base.json').read_text())['php_version']
     assert version == expected, (version, expected)
     command(sys.executable, 'tests/integration.py', image_id)
-    command('docker', 'save', '-o', str(OUT/'image.tar'), 'thuisweb:test')
+    command('docker', 'save', '-o', str(OUT/'image.tar'), 'homeweb:test')
     scanner = json.loads((ROOT/'scanner.json').read_text())['trivy_image']
     command('docker', 'pull', '--platform', 'linux/amd64', scanner)
     common = ['docker', 'run', '--rm', '--platform', 'linux/amd64', '--mount', f'type=bind,source={OUT},target=/reports', scanner]

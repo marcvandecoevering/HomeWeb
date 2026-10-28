@@ -1,7 +1,7 @@
 {
-  "series": "8.3",
-  "minimum": "8.3.36",
-  "reviewed": "2026-10-21",
+  "series": "8.5",
+  "minimum": "8.5.12",
+  "reviewed": "2026-10-28",
   "source": "https://www.php.net/archive/2026.php",
   "blocked_advisories": ["CVE-2026-109618", "CVE-2026-109619"]
 }
