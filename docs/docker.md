@@ -25,7 +25,7 @@ New-Item -ItemType Directory -Path www, config
 docker compose up -d
 ```
 
-Open **[http://localhost:8583](http://localhost:8583)**. The first download may take a few minutes. The starter page shows the running component versions.
+Open **[http://localhost:8080](http://localhost:8080)**. The first download may take a few minutes. The starter page shows the running component versions.
 
 ## Add your website
 
@@ -56,17 +56,17 @@ Updates preserve your website and any existing starter page. Docker Desktop must
 
 ## Another port or multiple websites
 
-If port 8583 is in use, create `.env` beside `compose.yaml`:
+If port 8080 is in use, create `.env` beside `compose.yaml`:
 
 ```dotenv
-HOMEWEB_PORT=8584
+HOMEWEB_PORT=8082
 ```
 
-Run `docker compose up -d` again and open `http://localhost:8584`.
+Run `docker compose up -d` again and open `http://localhost:8082`.
 
 For another website, create a separate folder such as `HomeWeb-second`, with its own `compose.yaml`, `www`, `config` and a different port in `.env`. Use different folder names: Compose derives the project name from the folder.
 
-The example binds only to your PC (`127.0.0.1`). To allow access from your home network, change the port mapping to `"${HOMEWEB_PORT:-8583}:8080"` and configure your firewall as needed. Set up a domain and HTTPS separately through a reverse proxy.
+The example binds only to your PC (`127.0.0.1`). To allow access from your home network, change the port mapping to `"${HOMEWEB_PORT:-8080}:8080"` and configure your firewall as needed. Set up a domain and HTTPS separately through a reverse proxy.
 
 ## Linux
 
@@ -77,7 +77,7 @@ PUID=1000
 PGID=1000
 ```
 
-Replace the example IDs with your own. Existing website files must be readable by this user; upload folders also need write permission. Run `docker compose up -d` and open `http://localhost:8583`.
+Replace the example IDs with your own. Existing website files must be readable by this user; upload folders also need write permission. Run `docker compose up -d` and open `http://localhost:8080`.
 
 ## Troubleshooting
 

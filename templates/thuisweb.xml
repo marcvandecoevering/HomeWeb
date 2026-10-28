@@ -15,7 +15,7 @@
   <WebUI>http://[IP]:[PORT:8080]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/marcvandecoevering/unraid-templates/main/templates/thuisweb.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/marcvandecoevering/HomeWeb/main/assets/icon.png?v=3</Icon>
-  <Config Name="Web port" Target="8080" Default="8583" Mode="tcp" Description="Choose a free host port for each website." Type="Port" Display="always" Required="true" Mask="false">8583</Config>
+  <Config Name="Web port" Target="8080" Default="8080" Mode="tcp" Description="Choose a free host port for each website." Type="Port" Display="always" Required="true" Mask="false">8080</Config>
   <Config Name="Website files" Target="/var/www/html" Default="/mnt/user/appdata/homeweb/www" Mode="rw" Description="Use a separate folder for each website. Only a completely empty folder receives the starter page." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/homeweb/www</Config>
   <Config Name="Configuration" Target="/config" Default="/mnt/user/appdata/homeweb/config" Mode="rw" Description="Separate configuration folder for each website; stores optional php.ini and initialization state." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/homeweb/config</Config>
   <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="Positive non-root numeric user ID." Type="Variable" Display="always" Required="true" Mask="false">99</Config>

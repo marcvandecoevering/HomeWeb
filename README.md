@@ -16,7 +16,7 @@ An empty website folder gets a starter page with live Apache, PHP and OPcache ve
 
 | Config Type | Name (display label) | Container Port / Container Path / Key | Host Port / Host Path / Value | Other setting |
 | --- | --- | --- | --- | --- |
-| Port | Web port | `8080` | `8583` | Connection Type: `TCP` |
+| Port | Web port | `8080` | `8080` | Connection Type: `TCP` |
 | Path | Website files | `/var/www/html` | `/mnt/user/appdata/homeweb/www` | Access Mode: `Read/Write` |
 | Path | Configuration | `/config` | `/mnt/user/appdata/homeweb/config` | Access Mode: `Read/Write` |
 | Variable | PUID | `PUID` | `99` | Non-root user ID |
