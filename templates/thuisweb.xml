@@ -13,7 +13,7 @@
   <Description>HTML, CSS, JavaScript en PHP, met .htaccess, URL-herschrijving, sessies en uploads. MySQL/MariaDB, PostgreSQL en SQLite worden vanuit PHP ondersteund. Webverzoeken draaien onder PUID/PGID; het opstartproces gebruikt root voor initialisatie. Bestaande websitebestanden worden niet overschreven of automatisch van eigenaar veranderd. Optioneel /config/php.ini is vertrouwde beheerdersconfiguratie en wordt bij herstart toegepast. Updates installeer je via Unraid.</Description>
   <Category>Network:Web Tools:</Category>
   <WebUI>http://[IP]:[PORT:8080]</WebUI>
-  <TemplateURL>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/templates/thuisweb.xml</TemplateURL>
+  <TemplateURL>https://raw.githubusercontent.com/marcvandecoevering/unraid-templates/main/templates/thuisweb.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/marcvandecoevering/ThuisWeb/main/assets/icon.png?v=3</Icon>
   <Config Name="Webpoort" Target="8080" Default="8583" Mode="tcp" Description="Kies voor iedere website een vrije hostpoort." Type="Port" Display="always" Required="true" Mask="false">8583</Config>
   <Config Name="Websitebestanden" Target="/var/www/html" Default="/mnt/user/appdata/thuisweb/www" Mode="rw" Description="Gebruik voor iedere website een aparte map. Alleen een volledig lege map krijgt een landingpagina." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/thuisweb/www</Config>
