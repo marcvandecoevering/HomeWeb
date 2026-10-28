@@ -1,5 +1,21 @@
 # Test results
 
+## HomeWeb / PHP 8.5 — 28 October 2026
+
+[Actions run 40729926596](https://github.com/marcvandecoevering/HomeWeb/actions/runs/40729926596) built PHP **8.5.12** and passed all **17 integration groups**. This includes legacy ThuisWeb initialization markers and starter-page fingerprints, HTTP version-header suppression, sessions, uploads, database connections, data preservation and the upload-progress mitigation even with a custom php.ini override.
+
+- Source commit: `7dc172fb3c0da346f774728df3a529c2b3b673d5`.
+- Tested config digest: `sha256:d17b5de7d4262581acb16e5ae27fa925d42bb3d16c4a47425bccde7ece4d65b7`.
+- Base image: `php:8.5.12-apache-bookworm@sha256:e2bf5ef4c70284955751a3723ed34bccdd1017a4d1c0026ac215c9c15581079b`.
+- Published image: `ghcr.io/marcvandecoevering/homeweb:php8.5` and `build-40729926596-1-7dc172fb3c0d`.
+- Registry digest: `sha256:e349777f3436972b9c3a3e86d88e9d81aa10a6d4ab32aff2856834fe9e87afa0`.
+
+Anonymous Docker download succeeded using a new empty Docker configuration directory. The downloaded image ran locally and the browser showed Apache 2.4.68, PHP/OPcache 8.5.12 and build `7dc172fb3c0d`. Machine-readable evidence is in [php85-validation.json](php85-validation.json).
+
+The Trivy scan and CycloneDX SBOM were generated from the exact tested image archive. The scan reported **zero fixable HIGH/CRITICAL findings**. Remaining package findings were 6 Critical, 297 High, 1539 Medium, 575 Low and 17 Unknown; these are not unique CVE counts or a guarantee of security. The PHP upload-progress mitigation follows the upstream 23 October advisory.
+
+The first migration build caught an Apache configuration-order regression: renaming the hardening file caused Debian's defaults to load later. The final image applies `zz-homeweb.conf` after those defaults, and the HTTP-header test passes. English desktop and 390px starter-page layouts were visually checked. Historical Unraid PHP 8.3 acceptance below does not substitute for PHP 8.5 testing on a user's own website.
+
 ## Historical ThuisWeb results — 21 October 2026
 
 These results describe the earlier **ThuisWeb / PHP 8.3** releases, not the HomeWeb PHP 8.5 migration. Exact historical names, versions and digests are retained for traceability. Current releases have their own evidence artifacts in [GitHub Actions](https://github.com/marcvandecoevering/HomeWeb/actions).

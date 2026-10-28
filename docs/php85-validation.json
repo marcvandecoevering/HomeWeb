@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-28",
+  "workflow": "https://github.com/marcvandecoevering/HomeWeb/actions/runs/40729926596",
+  "image": {
+    "image_id": "sha256:d17b5de7d4262581acb16e5ae27fa925d42bb3d16c4a47425bccde7ece4d65b7",
+    "config_digest": "sha256:d17b5de7d4262581acb16e5ae27fa925d42bb3d16c4a47425bccde7ece4d65b7",
+    "archive_sha256": "6dbaa91dac22e4b539792cb7faece033f0b5f1ac6c5df92cafd1e391a58c1605",
+    "revision": "7dc172fb3c0da346f774728df3a529c2b3b673d5",
+    "php": "8.5.12",
+    "base_image": "php:8.5.12-apache-bookworm@sha256:e2bf5ef4c70284955751a3723ed34bccdd1017a4d1c0026ac215c9c15581079b",
+    "release_fingerprint": "b8cf34fa106dd83600977cbc187d83a003655a89d7781a4f49d4ebef80f43317",
+    "scanner": "aquasec/trivy:0.76.1@sha256:2e6c00d711ab4ae41d8a30c2c1fd3bd3b62704c177bb120f95012e939edfb3df",
+    "run": 17,
+    "attempt": 1,
+    "created": "2026-10-28T16:53:12.003409+00:00"
+  },
+  "integration": {
+    "image": "sha256:d17b5de7d4262581acb16e5ae27fa925d42bb3d16c4a47425bccde7ece4d65b7",
+    "completed": true,
+    "passed": [
+      "empty directory landing and ownership",
+      "live landing versions; replaced page disables version endpoint",
+      "legacy landing fingerprint and endpoint preserve version privacy",
+      "HTML, PHP, index preference and rewrite",
+      "PHP errors logged but hidden; server version headers suppressed",
+      "sessions across requests",
+      "worker identity, writable uploads, 32MiB acceptance and oversized rejection",
+      "PHP security floor and required extensions including GD features",
+      "MariaDB, PostgreSQL and SQLite through web PHP",
+      "restart/replacement preserve contents and existing ownership",
+      "hidden files suppress initialization; independent websites and custom IDs",
+      "internal independent health, external isolation, no listing or dotfiles",
+      "invalid environment, inaccessible and read-only directories fail clearly",
+      "HTTP upload-progress mitigation survives custom php.ini override",
+      "custom php.ini override and invalid syntax rejection",
+      "initialization marker prevents landing resurrection",
+      "legacy initialization marker prevents landing resurrection"
+    ]
+  },
+  "scan_counts": {
+    "CRITICAL": 6,
+    "HIGH": 297,
+    "MEDIUM": 1539,
+    "LOW": 575,
+    "UNKNOWN": 17
+  },
+  "fixable_high_critical": 0,
+  "registry_digest": "sha256:e349777f3436972b9c3a3e86d88e9d81aa10a6d4ab32aff2856834fe9e87afa0",
+  "note": "CI results for PHP 8.5.12. Remaining findings without fixes are retained. Existing production containers were not migrated."
+}
