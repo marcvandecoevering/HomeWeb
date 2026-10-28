@@ -9,6 +9,7 @@ import tarfile
 import urllib.error
 import urllib.parse
 import urllib.request
+from release_identity import LABEL, unchanged
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -52,6 +53,7 @@ def main():
     except urllib.error.HTTPError as error:
         if error.code != 404: raise
         previous = None
+    labels = {}
     if previous:
         config = get(f'https://ghcr.io/v2/{name}/blobs/'+previous['config']['digest'], headers)
         labels = config['config']['Labels']
@@ -69,7 +71,17 @@ def main():
         assert len(entries) == 1
         digest = 'sha256:' + hashlib.sha256(archive.extractfile(entries[0]['Config']).read()).hexdigest()
         assert digest == meta['config_digest']
+        tested_config = json.load(archive.extractfile(entries[0]['Config']))
+        assert tested_config['config']['Labels'][LABEL] == meta['release_fingerprint']
     pathlib.Path('artifacts/loaded-image.tar').unlink()
+    if unchanged(labels, meta['release_fingerprint']):
+        pathlib.Path('artifacts/published.json').write_text(json.dumps({
+            'status': 'unchanged', 'stable': image+':php8.3',
+            'release_fingerprint': meta['release_fingerprint'],
+            'retained_config_digest': previous['config']['digest'],
+        }, indent=2))
+        print('UNCHANGED: application, base image and packages match; no tags pushed')
+        return
     unique = f"{image}:build-{os.environ['GITHUB_RUN_ID']}-{os.environ['GITHUB_RUN_ATTEMPT']}-{meta['revision'][:12]}"
     # Never overwrite a unique tag, including after a partially successful rerun.
     try:

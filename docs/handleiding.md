@@ -163,3 +163,9 @@ tag blijft bij een test- of scanfout beschikbaar.
 - [Unraid-testprotocol](unraid-test.md)
 
 MIT-licentie; zie [LICENSE](../LICENSE).
+
+## Wanneer verschijnt een containerupdate?
+
+De dagelijkse workflow bouwt, test en scant ThuisWeb. Publicatie volgt alleen als de inhoudelijke release-identiteit verschilt: Dockerfile, runtime, Apache-configuratie, startpagina, beveiligingsbeleid, het officiële PHP-basisimage of de geïnstalleerde pakketversies. README- en templatewijzigingen, een nieuw buildnummer of alleen een nieuwe scan veroorzaken geen publicatie.
+
+Bij een gelijke identiteit blijven zowel de vaste tag `php8.3` als de bestaande buildtags ongewijzigd. Het Actions-artifact `publication` vermeldt dan `unchanged`. Scanfouten blijven de workflow blokkeren. De eerste build na invoering publiceert eenmaal om de vergelijkingsidentiteit aan de image toe te voegen. De controle verandert niets aan automatische installatie-instellingen op Unraid.

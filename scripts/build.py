@@ -7,6 +7,7 @@ import pathlib
 import subprocess
 import sys
 import tarfile
+from release_identity import LABEL, fingerprint
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 os.chdir(ROOT)
@@ -21,6 +22,7 @@ def main():
     # Never leave an earlier success marker beside a failed new build.
     (OUT/'tested-image.json').unlink(missing_ok=True)
     command(sys.executable, 'scripts/validate.py')
+    command(sys.executable, 'tests/release_identity_test.py')
     assert command('docker', 'info', '--format', '{{.OSType}}', capture=True) == 'linux', 'Linux Docker engine required'
     base = command(sys.executable, 'scripts/resolve-base.py', capture=True)
     revision = command('git', 'rev-parse', 'HEAD', capture=True)
@@ -31,6 +33,15 @@ def main():
             '--label', 'org.opencontainers.image.source=https://github.com/'+os.environ.get('GITHUB_REPOSITORY', 'unpublished/thuisweb'),
             '--label', 'nl.thuisweb.run='+run, '--label', 'nl.thuisweb.attempt='+attempt,
             '-t', 'thuisweb:test', '.')
+    packages = command('docker', 'run', '--rm', '--entrypoint', 'dpkg-query', 'thuisweb:test',
+                       '-W', '-f=${Package}\t${Version}\t${Architecture}\n', capture=True)
+    identity = fingerprint(ROOT, base, packages)
+    # Add comparison metadata BEFORE testing; never modify the tested image afterward.
+    container = command('docker', 'create', 'thuisweb:test', capture=True)
+    try:
+        command('docker', 'commit', '--change', f'LABEL {LABEL}={identity}', container, 'thuisweb:test')
+    finally:
+        command('docker', 'rm', container)
     image_id = command('docker', 'image', 'inspect', '--format', '{{.Id}}', 'thuisweb:test', capture=True)
     version = command('docker', 'run', '--rm', '--entrypoint', 'php', image_id, '/opt/thuisweb/check.php', capture=True)
     expected = json.loads((OUT/'base.json').read_text())['php_version']
@@ -58,7 +69,7 @@ def main():
         assert len(entries) == 1, 'Expected one platform image in tested archive'
         config_digest = 'sha256:' + hashlib.sha256(archive.extractfile(entries[0]['Config']).read()).hexdigest()
     metadata = {'image_id': image_id, 'config_digest': config_digest, 'archive_sha256': checksum, 'revision': revision, 'php': version,
-                'base_image': base, 'scanner': scanner, 'run': int(run), 'attempt': int(attempt),
+                'base_image': base, 'release_fingerprint': identity, 'scanner': scanner, 'run': int(run), 'attempt': int(attempt),
                 'created': datetime.datetime.now(datetime.timezone.utc).isoformat()}
     (OUT/'tested-image.json').write_text(json.dumps(metadata, indent=2)+'\n')
     print('PASS: exact image built, integration-tested, scanned and inventoried:', image_id)
