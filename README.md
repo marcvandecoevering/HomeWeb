@@ -37,3 +37,7 @@ Installeer ThuisWeb opnieuw met een andere containernaam, een vrije poort en eig
 - Updates installeer je via Unraid. Maak een back-up van je website- en configuratiemappen en eventuele database.
 
 [Handleiding](docs/handleiding.md) · [Vraag stellen of probleem melden](https://github.com/marcvandecoevering/ThuisWeb/issues) · [MIT-licentie](LICENSE)
+
+## Unraid-catalogus
+
+De installatietemplate wordt onderhouden in [unraid-templates](https://github.com/marcvandecoevering/unraid-templates). De broncode en Docker-releases blijven in deze repository. Het oude templatepad blijft beschikbaar voor bestaande installaties; nieuwe templatewijzigingen horen in de centrale catalogus en de compatibiliteitskopie.
