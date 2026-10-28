@@ -25,8 +25,8 @@ COPY landing/index.html /opt/homeweb/index.html
 COPY security-policy.json /opt/homeweb/security-policy.json
 COPY apache/homeweb.conf /etc/apache2/sites-available/000-default.conf
 RUN printf 'Listen 8080\nListen 127.0.0.1:8081\n' > /etc/apache2/ports.conf \
-    && printf 'ServerName localhost\nServerTokens Prod\nServerSignature Off\nTraceEnable Off\n' > /etc/apache2/conf-available/homeweb.conf \
-    && a2enconf homeweb \
+    && printf 'ServerName localhost\nServerTokens Prod\nServerSignature Off\nTraceEnable Off\n' > /etc/apache2/conf-available/zz-homeweb.conf \
+    && a2enconf zz-homeweb \
     && chmod 755 /opt/homeweb/entrypoint.sh \
     && mkdir -p /config /opt/homeweb/health \
     && printf 'ready\n' > /opt/homeweb/health/index.html \

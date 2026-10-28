@@ -110,7 +110,7 @@ try:
     logs = subprocess.run(['docker', 'logs', app], capture_output=True, text=True)
     assert 'homeweb-test-error-sentinel' in logs.stdout + logs.stderr
     headers = request(app, '/', '-I')
-    assert 'X-Powered-By:' not in headers and 'PHP/' not in headers and 'Apache/' not in headers
+    assert 'X-Powered-By:' not in headers and 'PHP/' not in headers and 'Apache/' not in headers, headers
     passed('PHP errors logged but hidden; server version headers suppressed')
     write(app, '/var/www/html/session.php', '<?php session_start(); echo $_SESSION["n"] = ($_SESSION["n"] ?? 0) + 1;')
     assert request(app, '/session.php', '-c', '/tmp/cookies') == '1'
