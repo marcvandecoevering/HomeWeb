@@ -4,18 +4,11 @@ HomeWeb runs one Apache/PHP website per container. It supports HTML, CSS, JavaSc
 
 ## Unraid settings
 
-| Setting | Default |
-| --- | --- |
-| Image | `ghcr.io/marcvandecoevering/homeweb:php8.5` |
-| Network | bridge |
-| Host port → container port | 8583 → 8080 |
-| Website | `/mnt/user/appdata/homeweb/www` → `/var/www/html` |
-| Configuration | `/mnt/user/appdata/homeweb/config` → `/config` |
-| PUID / PGID | 99 / 100 |
-| PHP memory | 256M |
-| Upload per file | 32M (32 MiB) |
-| Time zone | Europe/Amsterdam |
-| WebUI (Advanced View) | `http://[IP]:[PORT:8080]` |
+Installation through **Apps** fills in the settings automatically. For manual installation through **Docker → Add Container**, follow the [exact field-by-field tables](../README.md#install-on-unraid), including every Port, Path and Variable entry.
+
+Host ports and paths refer to your Unraid server and may be changed. Container port `8080`, container paths `/var/www/html` and `/config`, and environment variable keys must remain exactly as documented. A display name such as **PHP memory limit** is a label, not a key: its **Key** is `PHP_MEMORY_LIMIT` and its default **Value** is `256M`.
+
+The image is `ghcr.io/marcvandecoevering/homeweb:php8.5`, with **Bridge** networking and **Privileged Off**. In Advanced View, enter `http://[IP]:[PORT:8080]` literally in **WebUI**; Unraid substitutes the address and host port. Do not enter arrows, backticks or quotation marks in any field.
 
 Open WebUI after installation. Replace `index.html` or add `index.php`, which takes priority. Only a completely empty website directory receives a starter page; hidden files also count. Existing files and ownership are preserved.
 
