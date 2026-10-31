@@ -74,9 +74,14 @@ def main():
         tested_config = json.load(archive.extractfile(entries[0]['Config']))
         assert tested_config['config']['Labels'][LABEL] == meta['release_fingerprint']
     pathlib.Path('artifacts/loaded-image.tar').unlink()
-    if unchanged(labels, meta['release_fingerprint']):
+    try:
+        latest = platform_manifest('latest', headers)
+    except urllib.error.HTTPError as error:
+        if error.code != 404: raise
+        latest = None
+    if unchanged(labels, meta['release_fingerprint']) and latest and latest['config']['digest'] == previous['config']['digest']:
         pathlib.Path('artifacts/published.json').write_text(json.dumps({
-            'status': 'unchanged', 'stable': image+':php8.5',
+            'status': 'unchanged', 'stable': image+':latest',
             'release_fingerprint': meta['release_fingerprint'],
             'retained_config_digest': previous['config']['digest'],
         }, indent=2))
@@ -100,7 +105,11 @@ def main():
         command('docker','push',image+':php8.5')
         stable = platform_manifest('php8.5', headers)
         assert stable['config']['digest'] == meta['config_digest']
-        pathlib.Path('artifacts/published.json').write_text(json.dumps({'unique':unique,'stable':image+':php8.5','image_id':meta['image_id']},indent=2))
+        command('docker','tag','homeweb:test',image+':latest')
+        command('docker','push',image+':latest')
+        latest = platform_manifest('latest', headers)
+        assert latest['config']['digest'] == meta['config_digest']
+        pathlib.Path('artifacts/published.json').write_text(json.dumps({'unique':unique,'stable':image+':latest','aliases':[image+':php8.5'],'image_id':meta['image_id']},indent=2))
     finally:
         command('docker','logout','ghcr.io')
 

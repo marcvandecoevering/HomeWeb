@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Container version="2">
   <Name>HomeWeb</Name>
-  <Repository>ghcr.io/marcvandecoevering/homeweb:php8.5</Repository>
+  <Repository>ghcr.io/marcvandecoevering/homeweb:latest</Repository>
   <Registry>https://ghcr.io</Registry>
   <Network>bridge</Network>
   <MyIP />

@@ -1,6 +1,6 @@
 services:
   homeweb:
-    image: ghcr.io/marcvandecoevering/homeweb:php8.5
+    image: ghcr.io/marcvandecoevering/homeweb:latest
     platform: linux/amd64
     ports:
       - "127.0.0.1:${HOMEWEB_PORT:-8080}:8080"

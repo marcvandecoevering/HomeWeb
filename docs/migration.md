@@ -1,6 +1,6 @@
 # Move from ThuisWeb to HomeWeb
 
-HomeWeb uses PHP 8.5 and English text. Its image is `ghcr.io/marcvandecoevering/homeweb:php8.5`. The old `ghcr.io/marcvandecoevering/thuisweb:php8.3` tag is not repointed to PHP 8.5. The main release workflow now maintains HomeWeb; the old image does not receive new releases from that workflow.
+HomeWeb uses PHP 8.5 and English text. Its image is `ghcr.io/marcvandecoevering/homeweb:latest`. The old `ghcr.io/marcvandecoevering/thuisweb:php8.3` tag is not repointed to PHP 8.5. The main release workflow now maintains HomeWeb; the old image does not receive new releases from that workflow.
 
 ## Check your website first
 
@@ -10,13 +10,13 @@ Remove explicit OPcache loading from custom php.ini files: PHP 8.5 includes OPca
 
 ## Unraid
 
-After testing, stop your old container. Edit its **Repository** to `ghcr.io/marcvandecoevering/homeweb:php8.5`. Keep the existing website/configuration mount paths, port and environment values. You may rename the container to HomeWeb, but do not rename or empty its data folders. In Advanced View set **WebUI** to `http://[IP]:[PORT:8080]` and **Icon URL** to `https://raw.githubusercontent.com/marcvandecoevering/HomeWeb/main/assets/icon.png`.
+After testing, stop your old container. Edit its **Repository** to `ghcr.io/marcvandecoevering/homeweb:latest`. Keep the existing website/configuration mount paths, port and environment values. You may rename the container to HomeWeb, but do not rename or empty its data folders. In Advanced View set **WebUI** to `http://[IP]:[PORT:8080]` and **Icon URL** to `https://raw.githubusercontent.com/marcvandecoevering/HomeWeb/main/assets/icon.png`.
 
 Apply, then inspect WebUI, logs and your website's important functions. Existing files are preserved. Old initialization markers and untouched starter-page status endpoints are supported.
 
 ## Docker Compose
 
-Keep the existing service name and project directory to avoid accidentally creating a second container. Change only its `image` to `ghcr.io/marcvandecoevering/homeweb:php8.5`, retaining mounts, ports and settings, then run:
+Keep the existing service name and project directory to avoid accidentally creating a second container. Change only its `image` to `ghcr.io/marcvandecoevering/homeweb:latest`, retaining mounts, ports and settings, then run:
 
 ```shell
 docker compose pull

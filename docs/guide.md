@@ -8,7 +8,7 @@ Installation through **Apps** fills in the settings automatically. For manual in
 
 Host ports and paths refer to your Unraid server and may be changed. Container port `8080`, container paths `/var/www/html` and `/config`, and environment variable keys must remain exactly as documented. A display name such as **PHP memory limit** is a label, not a key: its **Key** is `PHP_MEMORY_LIMIT` and its default **Value** is `256M`.
 
-The image is `ghcr.io/marcvandecoevering/homeweb:php8.5`, with **Bridge** networking and **Privileged Off**. In Advanced View, enter `http://[IP]:[PORT:8080]` literally in **WebUI**; Unraid substitutes the address and host port. Do not enter arrows, backticks or quotation marks in any field.
+The image is `ghcr.io/marcvandecoevering/homeweb:latest`, with **Bridge** networking and **Privileged Off**. In Advanced View, enter `http://[IP]:[PORT:8080]` literally in **WebUI**; Unraid substitutes the address and host port. Do not enter arrows, backticks or quotation marks in any field.
 
 Open WebUI after installation. Replace `index.html` or add `index.php`, which takes priority. Only a completely empty website directory receives a starter page; hidden files also count. Existing files and ownership are preserved.
 

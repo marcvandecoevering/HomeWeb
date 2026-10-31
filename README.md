@@ -34,7 +34,7 @@ Open **Docker → Add Container** and set:
 | Field | Enter |
 | --- | --- |
 | Name | `HomeWeb` (or another unique container name) |
-| Repository | `ghcr.io/marcvandecoevering/homeweb:php8.5` |
+| Repository | `ghcr.io/marcvandecoevering/homeweb:latest` |
 | Network Type | `Bridge` |
 | Privileged | `Off` |
 | WebUI (Advanced View) | `http://[IP]:[PORT:8080]` |
@@ -57,3 +57,5 @@ Create another container with its own name, free host port, website folder and c
 - Moving from ThuisWeb? Follow the [migration guide](docs/migration.md) before switching to PHP 8.5.
 
 [User guide](docs/guide.md) · [Support](https://github.com/marcvandecoevering/HomeWeb/issues) · [Unraid templates](https://github.com/marcvandecoevering/unraid-templates) · [MIT license](LICENSE)
+
+`latest` is the standard update channel. HomeWeb stays on PHP 8.5, including security and patch updates within that series. The `php8.5` tag remains a compatibility alias for existing installations.

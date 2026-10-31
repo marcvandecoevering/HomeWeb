@@ -36,6 +36,15 @@ class IdentityTests(unittest.TestCase):
                 fingerprint(root, 'base', '')
 
     def test_publisher_skips_without_login_or_push(self):
+        self.check_publication('matching')
+
+    def test_missing_latest_is_published_even_when_content_is_unchanged(self):
+        self.check_publication('missing')
+
+    def test_stale_latest_is_repaired_even_when_content_is_unchanged(self):
+        self.check_publication('stale')
+
+    def check_publication(self, channel):
         import hashlib
         env = {'GITHUB_REPOSITORY':'owner/HomeWeb', 'GH_TOKEN':'test', 'GITHUB_ACTOR':'owner',
                'GITHUB_REF':'refs/heads/main', 'GITHUB_EVENT_NAME':'schedule', 'GITHUB_SHA':'revision',
@@ -55,15 +64,29 @@ class IdentityTests(unittest.TestCase):
                         for path, data in [('config.json',config),('manifest.json',b'[{"Config":"config.json"}]')]:
                             info = tarfile.TarInfo(path); info.size = len(data)
                             archive.addfile(info, io.BytesIO(data))
-                meta = {'revision':'revision','run':2,'attempt':1,'release_fingerprint':'same',
+                meta = {'revision':'revision','run':2,'attempt':1,'release_fingerprint':'same','image_id':'tested',
                         'config_digest':digest,'archive_sha256':hashlib.sha256(Path('artifacts/image.tar').read_bytes()).hexdigest()}
                 Path('artifacts/tested-image.json').write_text(json.dumps(meta))
                 responses = [{'object':{'sha':'revision'}},{'token':'test'},
                              {'config':{'Labels':{LABEL:'same','nl.homeweb.run':'1','nl.homeweb.attempt':'1'}}}]
-                with patch.object(pub,'get',side_effect=responses), patch.object(pub,'platform_manifest',return_value={'config':{'digest':'previous'}}), patch.object(pub,'command') as command:
+                if channel != 'matching':
+                    responses.append(pub.urllib.error.HTTPError('unique',404,'missing',{},None))
+                manifests = [{'config':{'digest':'previous'}},
+                             {'config':{'digest':'previous' if channel == 'matching' else 'stale'}}]
+                if channel == 'missing':
+                    manifests[1] = pub.urllib.error.HTTPError('latest',404,'missing',{},None)
+                manifests.extend([{'config':{'digest':digest}}] * 3)
+                with patch.object(pub,'get',side_effect=responses), patch.object(pub,'platform_manifest',side_effect=manifests), patch.object(pub,'command') as command:
                     pub.main()
-                    self.assertFalse(any(c.args[:2] in [('docker','push'),('docker','login'),('docker','tag')] for c in command.call_args_list))
-                self.assertEqual(json.loads(Path('artifacts/published.json').read_text())['status'],'unchanged')
+                    if channel == 'matching':
+                        self.assertFalse(any(c.args[:2] in [('docker','push'),('docker','login'),('docker','tag')] for c in command.call_args_list))
+                    else:
+                        command.assert_any_call('docker','push','ghcr.io/owner/homeweb:latest')
+                        command.assert_any_call('docker','push','ghcr.io/owner/homeweb:php8.5')
+                result = json.loads(Path('artifacts/published.json').read_text())
+                self.assertEqual(result['stable'], 'ghcr.io/owner/homeweb:latest')
+                if channel == 'matching':
+                    self.assertEqual(result['status'],'unchanged')
         finally:
             os.chdir(cwd)
 

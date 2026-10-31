@@ -8,7 +8,7 @@ Source: [marcvandecoevering/HomeWeb](https://github.com/marcvandecoevering/HomeW
 2. Push to main. GitHub Actions builds, integration-tests and scans a single image. Publication uses the tested archive and does not rebuild it. PR jobs only have read permissions.
 3. Inspect the `evidence` artifact: integration results, scan, SBOM, base digest and tested-image metadata. Fixable HIGH/CRITICAL findings block publication.
 4. The separate publish job uses GitHub's short-lived `GITHUB_TOKEN` with package-write permission. It rejects stale main commits and older runs. No personal token is required.
-5. If the release fingerprint differs, it publishes `php8.5` and a unique `build-RUN_ID-ATTEMPT-COMMIT` tag. Otherwise the stable tag stays unchanged and the `publication` artifact records `unchanged`.
+5. If the release fingerprint differs, it publishes `latest`, the compatibility alias `php8.5`, and a unique `build-RUN_ID-ATTEMPT-COMMIT` tag. If the content and both channel tags already match, the stable tags stay unchanged and the `publication` artifact records `unchanged`.
 6. For a new GHCR package, set package visibility to **Public** and verify an anonymous pull using an empty Docker config directory. Compare its config digest with `tested-image.json`; engine image IDs can differ between storage drivers.
 7. Follow the [Unraid test protocol](unraid-test.md) using isolated test folders and a free port.
 
